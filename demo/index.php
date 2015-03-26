@@ -4,7 +4,7 @@ require "../vendor/autoload.php";
 
 use \Hichimi\App;
 
-$_REQUEST["_uri"] = "greet/John";
+$_REQUEST["_uri"] = "js/test.js";
 $_REQUEST["age"] = "23";
 $_SERVER["REDIRECT_METHOD"] = "GET";
 
@@ -31,6 +31,8 @@ $router
     ->get(":name", "index", ["name" => "string"])
     ->get("", "error")
 ;
+$router->statics('css', 'static/css');
+$router->statics('js', 'static/js');
 
 $router->get("count/:id", function ($id) {
     return $id;

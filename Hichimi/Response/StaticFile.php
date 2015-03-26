@@ -42,6 +42,6 @@ class StaticFile extends Response
 
     public function renderer()
     {
-        echo readfile($this->file);
+        readfile($this->file);
     }
 }

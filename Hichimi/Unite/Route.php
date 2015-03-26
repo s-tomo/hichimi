@@ -5,6 +5,7 @@ namespace Hichimi\Unite;
 use Hichimi\Core\Router;
 use Hichimi\Core\Action;
 use Hichimi\Response\StaticFile;
+use Hichimi\Util\URL;
 
 class Route
 {
@@ -62,7 +63,7 @@ class Route
     private function register($method, $pattern, \Closure $action, array $placeholder = null)
     {
         $action = new Action($action);
-        Router::action($method, Router::parse($pattern, $placeholder), $action);
+        Router::action($method, [$pattern, $placeholder], $action);
         return $action;
     }
 
@@ -72,16 +73,22 @@ class Route
      * @param array $placeholder
      * @return Resource
      */
-    function resource($pattern, $controller, array $placeholder = null)
+    function resource($pattern, $controller, array $placeholder = [])
     {
-        return new Resource(Router::parse($pattern, $placeholder), $controller);
+        return new Resource([$pattern, $placeholder], $controller);
     }
 
+    /**
+     * @param $pattern
+     * @param $path
+     * @return Action
+     */
     function statics($pattern, $path)
     {
-        $action = new Action(function() use ($path) {
-
+        $action = new Action(function($name) use ($path) {
+            return StaticFile::make(URL::merge($path, $name));
         });
-        return;
+        Router::action('get', [$pattern.'/:path', ['path'=>'path']], $action);
+        return $action;
     }
 }
