@@ -33,7 +33,7 @@ final class Redirect
 
     static function uri($uri, array $params = null)
     {
-        if (mb_strtolower(substr($uri, 0, 4)) !== "http")
+        if (mb_strtolower(substr($uri, 0, 1)) !== '/' && !preg_match('@\w+://.*@', $uri))
             $uri = URL::full($uri);
         if (!is_null($params)) {
             $qs = [];

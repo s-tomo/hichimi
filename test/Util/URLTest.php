@@ -30,6 +30,8 @@ class URLTest extends \PHPUnit_Framework_TestCase
     {
         $actual = URL::merge('/test/', '/greek/hello/');
         $this->assertEquals('test/greek/hello', $actual);
+        $actual = URL::merge('/test/', '');
+        $this->assertEquals('test', $actual);
     }
 
     public function testFull()

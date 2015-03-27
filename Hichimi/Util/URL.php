@@ -27,7 +27,8 @@ class URL
 
     public static function merge($uri, $sub)
     {
-        return self::trim($uri) . '/' . self::trim($sub);
+        $sub = self::trim($sub);
+        return self::trim($uri) . ($sub ? '/' . $sub: '');
     }
 
     public static function trim($uri)

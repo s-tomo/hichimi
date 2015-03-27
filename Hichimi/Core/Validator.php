@@ -18,7 +18,7 @@ final class Validator
     {
 
         $value = Request::get($name);
-        if (is_null($value) or (is_string($value) and trim($value) != "")) {
+        if (is_null($value) or (is_string($value) and trim($value) == "")) {
             if (in_array("required", $rules))
                 throw new ValidationAbort($name, "required");
         } else {

@@ -15,8 +15,8 @@ class StaticFileTest extends \PHPUnit_Framework_TestCase
      */
     public function testMake($path, $type)
     {
-        $res = StaticFile::make(dirname(__FILE__) . "/" . $path);
-        $this->assertEquals(["Content-type: {$type}"], \PHPUnit_Framework_Assert::readAttribute($res, "headers"));
+        $res = StaticFile::make(dirname(__FILE__) . '/' . $path);
+        $this->assertEquals(["Content-type: {$type}"], \PHPUnit_Framework_Assert::readAttribute($res, 'headers'));
     }
 
     /**
@@ -24,7 +24,7 @@ class StaticFileTest extends \PHPUnit_Framework_TestCase
      */
     public function testMakeUnexistFile()
     {
-        StaticFile::make("foo/bar.php");
+        StaticFile::make('foo/bar.php');
     }
 
     /**
@@ -36,7 +36,7 @@ class StaticFileTest extends \PHPUnit_Framework_TestCase
     public function renderer($path, $type, $value)
     {
         ob_start();
-        StaticFile::make(dirname(__FILE__) . "/" . $path)->renderer();
+        StaticFile::make(dirname(__FILE__) . '/' . $path)->renderer();
         $expected = ob_get_clean();
         $this->assertEquals($expected, $value);
     }
@@ -45,13 +45,13 @@ class StaticFileTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [
-                "static/test.js",
-                "application/x-javascript",
+                'static/test.js',
+                'application/x-javascript',
                 "alert('test');"
             ],
             [
-                "static/test.css",
-                "text/css",
+                'static/test.css',
+                'text/css',
                 "* {
     margin: 0;
 }"

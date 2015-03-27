@@ -30,10 +30,10 @@ class Router
     {
         list($type, $path, $argv) = self::parse(...$uri);
         switch ($type) {
-            case "dynamic":
+            case 'dynamic':
                 Dot::set(self::$dynamics, "{$path}.{$method}", [$controller, $argv]);
                 break;
-            case "static":
+            case 'static':
             default:
                 Dot::set(self::$statics, "{$path}.{$method}", $controller);
                 break;
@@ -75,24 +75,24 @@ class Router
     private static function parse($uri, array $placeholder = null)
     {
         if (is_null($placeholder) or count($placeholder) < 1)
-            return ["static", $uri, []];
-        $patterns = explode("/", self::trim($uri));
+            return ['static', $uri, []];
+        $patterns = explode('/', self::trim($uri));
         $argv = [];
         foreach ($patterns as $i => $param) {
-            if (substr($param, 0, 1) === ":") {
+            if (substr($param, 0, 1) === ':') {
                 $name = substr($param, 1);
                 if (isset($placeholder[$name])) {
                     $type = $placeholder[$name];
-                } else if (strpos($name, "@")) {
+                } else if (strpos($name, '@')) {
                     list($name, $type) = $name;
                 } else {
-                    throw new \Exception("");
+                    throw new \Exception('');
                 }
-                $patterns[$i] = "(" . self::placeholder($type) . ")";
+                $patterns[$i] = '(' . self::placeholder($type) . ')';
                 $argv[] = $name;
             }
         }
-        return ["dynamic", implode("/", $patterns), $argv];
+        return ['dynamic', implode('/', $patterns), $argv];
     }
 
     /**
@@ -101,9 +101,9 @@ class Router
      */
     private static function trim($uri)
     {
-        if (substr($uri, -1) === "/")
+        if (substr($uri, -1) === '/')
             $uri = substr($uri, 0, -1);
-        if (substr($uri, 0, 1) === "/")
+        if (substr($uri, 0, 1) === '/')
             $uri = substr($uri, 1);
         return $uri;
     }

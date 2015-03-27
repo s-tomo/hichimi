@@ -10,35 +10,35 @@ class ExceptionTest extends \PHPUnit_Framework_TestCase
     {
         $test = function () {
         };
-        Exception::set("test", $test);
-        $ref = new \ReflectionClass("Hichimi\\Core\\Exception");
-        $callbacks = $ref->getProperty("callbacks");
+        Exception::set('test', $test);
+        $ref = new \ReflectionClass('Hichimi\Core\Exception');
+        $callbacks = $ref->getProperty('callbacks');
         $callbacks->setAccessible(true);
-        $this->assertEquals(["test" => $test], $callbacks->getValue(null));
+        $this->assertEquals(['test' => $test], $callbacks->getValue(null));
     }
 
     function test_callback()
     {
         $res = Exception::callback(new \Exception());
-        $this->assertEquals("Hichimi\\Response\\Html", get_class($res));
+        $this->assertEquals('Hichimi\Response\Html', get_class($res));
     }
 
     function test_check()
     {
-        Exception::set("InvalidArgumentException", function (\InvalidArgumentException $e) {
-            return "N:" . get_class($e);
+        Exception::set('InvalidArgumentException', function (\InvalidArgumentException $e) {
+            return 'N:' . get_class($e);
         });
-        Exception::set("test\\Core\\TestException", function (\Exception $e) {
-            return "E:" . get_class($e);
+        Exception::set('test\Core\TestException', function (\Exception $e) {
+            return 'E:' . get_class($e);
         });
         $exception = Exception::check(new TestException());
-        $this->assertEquals("E:test\\Core\\TestException", $exception, "exception match");
+        $this->assertEquals('E:test\Core\TestException', $exception, 'exception match');
         $exception = Exception::check(new \InvalidArgumentException());
-        $this->assertEquals("N:InvalidArgumentException", $exception, "invalid argument exception match");
+        $this->assertEquals('N:InvalidArgumentException', $exception, 'invalid argument exception match');
         $exception = Exception::check(new SubTestException());
-        $this->assertEquals("E:test\\Core\\SubTestException", $exception, "exception instance");
-        $res = Exception::check(new \Exception("hoge"));
-        $this->assertEquals(Exception::callback(new \Exception("hoge")), $res);
+        $this->assertEquals('E:test\Core\SubTestException', $exception, 'exception instance');
+        $res = Exception::check(new \Exception('hoge'));
+        $this->assertEquals(Exception::callback(new \Exception('hoge')), $res);
     }
 }
 

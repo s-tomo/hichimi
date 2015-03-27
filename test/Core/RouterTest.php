@@ -11,7 +11,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     public function testTrim()
     {
         $trim = self::getMethod('trim');
-        $res = $trim->invokeArgs(null, ["/test/hoge/"]);
+        $res = $trim->invokeArgs(null, ['/test/hoge/']);
         $this->assertEquals('test/hoge', $res);
     }
 

@@ -9,13 +9,14 @@ class TextTest extends \PHPUnit_Framework_TestCase
 {
     public function testMake()
     {
-        $res = Text::make("");
-        $this->assertEquals(["Content-type: text/plain"], \PHPUnit_Framework_Assert::readAttribute($res, "headers"));
+        $res = Text::make('');
+        $this->assertEquals(['Content-type: text/plain'], \PHPUnit_Framework_Assert::readAttribute($res, 'headers'));
     }
 
     /**
      * @dataProvider inputs
      * @expectedException \InvalidArgumentException
+     * @param $inp
      */
     public function testMakeIllegalArguments($inp)
     {
@@ -34,6 +35,8 @@ class TextTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider text
+     * @param $res
+     * @param $actual
      */
     public function testRenderer($res, $actual)
     {
@@ -46,9 +49,9 @@ class TextTest extends \PHPUnit_Framework_TestCase
     public function text()
     {
         return [
-            [Text::make(""), ""],
-            [Text::make("")->stderr("foo")->stderr("bar"), "error:foo¥r¥n" . "error:bar¥r¥n"],
-            [Text::make("foo"), "foo"]
+            [Text::make(''), ''],
+            [Text::make('')->stderr('foo')->stderr('bar'), 'error:foo¥r¥n' . 'error:bar¥r¥n'],
+            [Text::make('foo'), 'foo']
         ];
     }
 }

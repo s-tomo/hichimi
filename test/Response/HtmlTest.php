@@ -9,13 +9,14 @@ class HtmlTest extends \PHPUnit_Framework_TestCase
 {
     public function testMake()
     {
-        $res = Html::make("");
-        $this->assertEquals(["Content-type: text/html"], \PHPUnit_Framework_Assert::readAttribute($res, "headers"));
+        $res = Html::make('');
+        $this->assertEquals(['Content-type: text/html'], \PHPUnit_Framework_Assert::readAttribute($res, 'headers'));
     }
 
     /**
      * @dataProvider inputs
      * @expectedException \InvalidArgumentException
+     * @param $inp
      */
     public function testMakeIllegalArguments($inp)
     {
@@ -32,6 +33,8 @@ class HtmlTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider html
+     * @param $res
+     * @param $actual
      */
     public function testRenderer($res, $actual)
     {
@@ -44,9 +47,9 @@ class HtmlTest extends \PHPUnit_Framework_TestCase
     public function html()
     {
         return [
-            [Html::make(""), ""],
-            [Html::make("")->stderr("foo")->stderr("bar"), "<pre>foo</pre><pre>bar</pre>"],
-            [Html::make("foo"), "foo"]
+            [Html::make(''), ''],
+            [Html::make('')->stderr('foo')->stderr('bar'), '<pre>foo</pre><pre>bar</pre>'],
+            [Html::make('foo'), 'foo']
         ];
     }
 
