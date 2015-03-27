@@ -56,7 +56,7 @@ class Router
         }
         foreach (self::$dynamics as $pattern => $inf) {
             $mat = [];
-            if (preg_match("@{$pattern}@", $uri, $mat)) {
+            if (preg_match("@^{$pattern}$@", $uri, $mat)) {
                 if (!isset($inf[$method]))
                     Redirect::abort(405);
                 list($controller, $_arg) = $inf[$method];
@@ -121,7 +121,7 @@ class Router
             case 'int':
                 return '\d+';
             case 'string':
-                return '\w+';
+                return '[^/]+';
             case 'path':
                 return '\S+';
             default:
